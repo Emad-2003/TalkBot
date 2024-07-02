@@ -21,13 +21,13 @@ def talk(text):
 
 def Heading():
     print('''       
-                     __       _      ____  __     __      __                               
-                    /  \     | |    |  __| \ \   / /     /  \                  
-                   / /\ \    | |    | |__   \ \_/ /     / /\ \                
-                  / /__\ \   | |    |  __|   | _ |     / /__\ \              
-                 / /    \ \  | |__  | |__   / / \ \   / /    \ \          
-                /_/      \_\ |____| |____| /_/   \_\ /_/      \_\           
-                                                                             ''')
+                  _____    __      _      _   __  ______   _____  _____
+                 |_   _|  /  \    | |    | | / / |  __  \ /  _  \|_   _|
+                   | |   / /\ \   | |    | |/ /  | |__| | | | | |  | |
+                   | |  / /__\ \  | |    |   /   |  __  | | | | |  | | 
+                   | | / ______ \ | |__  | |\ \  | |__| | | | | |  | |
+                   |_|/_/      \_\|____| |_| \_\ |______/ \_____/  |_|
+              ''')
             
 def take_command():
     command=''
@@ -38,7 +38,7 @@ def take_command():
             voice=listener.listen(source)
             command=listener.recognize_google(voice)
             
-            if 'alexa' in command.lower():
+            if 'talkbot' in command.lower():
                 
                 print('Question')
                 c=command.lower()
@@ -51,30 +51,34 @@ def take_command():
         pass
     return command
 
-def run_alexa():
+def run_talkbot():
     
     command=take_command()
     if 'time' in command:
         time=datetime.datetime.now().strftime('%H:%M')
         print(time)
         talk('Current time is'+time)
-        
-    elif 'who' in command:
-        command=command.replace('who','')
-        if 'is' in command:
-            command=command.replace('is','')
-        elif 'was' in command:
-            command=command.replace('was','')
-            
-        info=wikipedia.summary(command,1)
-        print(info)
-        talk(info)
     
     elif 'joke' in command:
         j=pyjokes.get_joke()
         print('__JOKE__')
         print(j)
         talk(j)
+        
+    try:
+        if 'who' in command:
+            command=command.replace('who','')
+            if 'is' in command:
+                command=command.replace('is','')
+            elif 'was' in command:
+                command=command.replace('was','')
+                
+            info=wikipedia.summary(command,1)
+            print(info)
+            talk(info)
+    except:
+        talk("couldnt find regarding this topic")
+    
     
     return command
     
@@ -83,11 +87,11 @@ def main_program():
     n=0
     while n>=0:
         if n==0:
-            talk('hello I am alexa, what can I do for you ? ')   
+            talk('hello I am Talkbot, what can I do for you ? ')   
         elif n>1:
             talk('what else can I do for you ? ')
         
-        command=run_alexa()
+        command=run_talkbot()
         n+=1
             
         if 'that\'s it for now' in command:
